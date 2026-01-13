@@ -1,8 +1,3 @@
-# .platform/routes.yaml
-"https://{all}/":
+"https://{default}/":
     type: upstream
-    upstream: "app:http"
-
-"http://{all}/":
-    type: redirect
-    to: "https://{all}/"
+    upstream: "app:default"

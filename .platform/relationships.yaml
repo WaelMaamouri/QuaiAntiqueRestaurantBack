@@ -1,0 +1,6 @@
+database:
+    type: mysql
+    service: "db"
+    database: "Quai_Antique"
+    username: "root"
+    password: ""
