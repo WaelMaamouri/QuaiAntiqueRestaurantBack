@@ -1,5 +1,0 @@
-# .upsun/local/services.yaml
-
-services:
-    mysql:
-        type: mariadb:10.4
