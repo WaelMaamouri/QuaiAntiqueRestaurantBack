@@ -1,6 +1,9 @@
+# .upsun/project.yaml
+
 applications:
     app:
         type: php:8.2
+
         build:
             flavor: none
 
@@ -25,5 +28,11 @@ applications:
                 - intl
                 - opcache
 
+        # Relation vers le service MySQL défini ci-dessous
         relationships:
-            database: "mysql:mysql" # alias:service_name
+            database: "mysql:mysql"
+
+# Définition du service MySQL directement dans project.yaml
+services:
+    mysql:
+        type: mariadb:10.4

@@ -1,0 +1,7 @@
+# .upsun/local/relationship.yaml
+# C’est un fichier purement informatif pour Symfony si tu veux l’utiliser
+
+database:
+    type: mysql
+    alias: database
+    service: mysql

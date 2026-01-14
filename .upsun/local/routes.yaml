@@ -1,3 +1,5 @@
+# .upsun/routes.yaml
+
 routes:
     "https://{default}/":
         type: upstream
