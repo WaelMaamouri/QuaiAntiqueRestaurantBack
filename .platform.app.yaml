@@ -14,8 +14,17 @@ variables:
     env:
         APP_ENV: prod
         APP_DEBUG: 0
+        DATABASE_URL: "%env(DATABASE_URL)%"
+        DEFAULT_URI: "https://main-bvxea6i-aofzto4ibqmv2.fr-3.platformsh.site"
 
-# Point d'entrée
+# Point d'entrée web
 web:
     public: true
     entrypoint: public/index.php
+
+# Extensions PHP requises pour Symfony/Doctrine
+runtime:
+    extensions:
+        - pdo
+        - pdo_mysql
+        - intl
