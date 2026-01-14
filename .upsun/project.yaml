@@ -26,4 +26,4 @@ applications:
                 - opcache
 
         relationships:
-            database: "mysql:mysql" # alias:nom_service exact
+            database: "mysql:mysql" # alias:service_name

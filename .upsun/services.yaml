@@ -1,2 +1,0 @@
-mysql:
-    type: mariadb:10.4
