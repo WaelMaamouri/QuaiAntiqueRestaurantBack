@@ -1,0 +1,21 @@
+name: my-symfony-app
+type: php:8.2
+
+# Commandes exécutées au build / déploiement
+build:
+    hooks:
+        pre-deploy:
+            - composer install --no-dev --optimize-autoloader
+            - php bin/console cache:clear --env=prod
+            - php bin/console cache:warmup --env=prod
+
+# Variables d'environnement
+variables:
+    env:
+        APP_ENV: prod
+        APP_DEBUG: 0
+
+# Point d'entrée
+web:
+    public: true
+    entrypoint: public/index.php
