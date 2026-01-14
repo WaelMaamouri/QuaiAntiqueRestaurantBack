@@ -26,9 +26,4 @@ applications:
                 - opcache
 
         relationships:
-            database: "mysql:mysql"
-
-        mounts:
-            "var/log": "shared:files/log"
-            "var/cache": "shared:files/cache"
-            "public/uploads": "shared:files/uploads"
+            database: "mysql:mysql" # alias:nom_service exact
