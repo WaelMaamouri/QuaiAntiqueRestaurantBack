@@ -1,0 +1,40 @@
+# .upsun/project.yaml
+applications:
+    app:
+        type: php:8.2
+        build:
+            flavor: none
+
+        web:
+            locations:
+                "/":
+                    root: "public"
+                    index: ["index.php"]
+                    allow: true
+                    scripts: true
+                    passthru: "/index.php"
+
+        dependencies:
+            php:
+                composer/composer: "^2"
+
+        runtime:
+            extensions:
+                - mbstring
+                - pdo
+                - pdo_mysql
+                - intl
+                - opcache
+
+        relationships:
+            database: "mysql:mysql"
+
+        mounts:
+            "var/log": "shared:files/log"
+            "var/cache": "shared:files/cache"
+            "public/uploads": "shared:files/uploads"
+
+services:
+    mysql:
+        type: mariadb:10.4
+        disk: 2048
