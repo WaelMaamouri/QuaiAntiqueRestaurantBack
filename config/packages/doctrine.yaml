@@ -1,20 +1,16 @@
-# config/packages/doctrine.yaml
 doctrine:
     dbal:
-        # Utilise la variable d'environnement DATABASE_URL
         url: "%env(resolve:DATABASE_URL)%"
         driver: "pdo_mysql"
-        server_version: "8.0" # correspond à ton MySQL Upsun
+        server_version: "9.5.0"
         charset: utf8mb4
         default_table_options:
             charset: utf8mb4
             collate: utf8mb4_unicode_ci
         profiling_collect_backtrace: "%kernel.debug%"
-        # Gestion des logs SQL en dev
         logging: "%kernel.debug%"
 
     orm:
-        auto_generate_proxy_classes: "%kernel.debug%"
         validate_xml_mapping: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
@@ -27,17 +23,14 @@ doctrine:
                 alias: App
         controller_resolver:
             auto_mapping: false
-        # Configuration pour l'identité des PK selon la base
-        identity_generation_preferences:
-            Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
 
-# Options spécifiques à l'environnement de test
+# Config pour test
 when@test:
     doctrine:
         dbal:
             dbname_suffix: "_test%env(default::TEST_TOKEN)%"
 
-# Options spécifiques à l'environnement de production
+# Config pour prod
 when@prod:
     doctrine:
         orm:
@@ -56,10 +49,9 @@ when@prod:
                 doctrine.system_cache_pool:
                     adapter: cache.system
 
-# Options spécifiques à l'environnement de développement
+# Config pour dev
 when@dev:
     doctrine:
         dbal:
-            # Affiche les requêtes SQL pour debug
             logging: true
             profiling_collect_backtrace: true

@@ -37,7 +37,7 @@ applications:
 services:
     mysql:
         # La dernière version stable MySQL chez Upsun est 8.0
-        type: "mysql:8.0"
+        type: "mysql:9.5.0"
 
 routes:
     "https://{default}/":

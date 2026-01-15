@@ -1,57 +1,54 @@
-# Upsun config for Symfony 8 + MySQL 8
-
+# Upsun configuration, generated using AI at: 2026-01-15T15:52:32+01:00
+# AI can make mistakes. Please modify this file to suit your needs.
 applications:
-    app:
-        type: php:8.4
+  app:
+    type: php:8.5
 
-        build:
-            flavor: none
+    build:
+      flavor: none
 
-        hooks:
-            build: |
-                set -ex
-                curl -sfS https://get.symfony.com/cloud/configurator | bash
-                symfony-build
+    hooks:
+      build: |
+        set -ex
+        curl -sfS https://get.symfony.com/cloud/configurator | bash
+        symfony-build
 
-            deploy: |
-                set -ex
-                symfony-deploy
+      deploy: |
+        set -ex
+        symfony-deploy
 
-        web:
-            locations:
-                "/":
-                    root: "public"
-                    passthru: "/index.php"
-                    expires: 5m
+    web:
+      locations:
+        /:
+          root: public
+          passthru: /index.php
+          expires: 5m
 
-        runtime:
-            extensions:
-                - mbstring
-                - opcache
-                - intl
-                - pdo
-                - pdo_mysql # MySQL only
+    runtime:
+      extensions:
+        - pdo_pgsql
+        - apcu
+        - mbstring
+        - sodium
 
-        relationships:
-            database: "mysql:mysql" # Match service name
+    relationships:
+      database: {}
 
-        mounts:
-            "var/cache":
-                source: tmp
-            "var/log":
-                source: storage
-            "var/sessions":
-                source: storage
+    mounts:
+      var/cache:
+        source: tmp
+      var/log:
+        source: storage
 
-        variables:
-            php:
-                opcache.preload: config/preload.php
+    variables:
+      php:
+        opcache.preload: config/preload.php
 
 services:
-    mysql:
-        type: "mysql:8.0"
+  database:
+    type: postgresql:18
 
 routes:
-    "https://{default}/":
-        type: upstream
-        upstream: "app:http"
+  https://{default}/:
+    type: upstream
+    upstream: app:http
