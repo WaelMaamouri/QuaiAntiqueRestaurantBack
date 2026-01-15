@@ -8,12 +8,11 @@ applications:
                     passthru: "/index.php"
         build:
             flavor: none
-            hooks:
-                build: |
-                    composer install --no-dev --optimize-autoloader
-                    mkdir -p var/cache var/log
-                    php bin/console cache:clear --env=prod --no-warmup
-                    php bin/console cache:warmup --env=prod
+            commands:
+                - composer install --no-dev --optimize-autoloader
+                - mkdir -p var/cache var/log
+                - php bin/console cache:clear --env=prod --no-warmup
+                - php bin/console cache:warmup --env=prod
         runtime:
             extensions:
                 - mbstring
