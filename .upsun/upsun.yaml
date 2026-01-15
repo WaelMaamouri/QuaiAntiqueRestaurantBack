@@ -37,9 +37,9 @@ applications:
 services:
     mysql:
         # La dernière version stable MySQL chez Upsun est 8.0
-        type: "mysql:9.5.0"
+        type: mysql:10.0
 
 routes:
-    "https://{default}/":
+    https://{default}/:
         type: upstream
-        upstream: "app:http"
+        upstream: quaiantique-restaurant-back:http

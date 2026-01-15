@@ -1,52 +1,43 @@
 # Upsun configuration, generated using AI at: 2026-01-15T16:03:53+01:00
 # AI can make mistakes. Please modify this file to suit your needs.
 applications:
-  quaiantique-restaurant-back:
-    type: php:8.5
-    build:
-      flavor: none
-    hooks:
-      build: |
-        set -ex
-        curl -sfS https://get.symfony.com/cloud/configurator | bash
-        symfony-build
+    quaiantique-restaurant-back:
+        type: php:8.5
+        build:
+            flavor: none
+        hooks:
+            build: |
+                set -ex
+                curl -sfS https://get.symfony.com/cloud/configurator | bash
+                symfony-build
 
-      deploy: |
-        set -ex
-        symfony-deploy
+            deploy: |
+                set -ex
+                symfony-deploy
 
-    web:
-      locations:
-        /:
-          root: public
-          passthru: /index.php
-          expires: 5m
+        web:
+            locations:
+                /:
+                    root: public
+                    passthru: /index.php
+                    expires: 5m
 
-    runtime:
-      extensions:
-        - pdo_pgsql  # PostgreSQL support
-        - apcu       # Performance enhancement
-        - mbstring   # Multibyte string support
-        - sodium     # Cryptography
+        runtime:
+            extensions:
+                - pdo_pgsql # PostgreSQL support
+                - apcu # Performance enhancement
+                - mbstring # Multibyte string support
+                - sodium # Cryptography
 
-    relationships:
-      database: {}  # Link to PostgreSQL service
+        relationships:
+            database: "mysql:mysql"
 
-    mounts:
-      var/cache:
-        source: tmp
-      var/log:
-        source: storage
+        mounts:
+            var/cache:
+                source: tmp
+            var/log:
+                source: storage
 
-    variables:
-      php:
-        opcache.preload: config/preload.php
-
-services:
-  database:
-    type: postgresql:18
-
-routes:
-  https://{default}/:
-    type: upstream
-    upstream: quaiantique-restaurant-back:http
+        variables:
+            php:
+                opcache.preload: config/preload.php

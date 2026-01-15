@@ -19,3 +19,5 @@
 .codacy/logs/var/cache/
 var/log/
 var/sessions/
+.codacy/logs/
+var/cache/
