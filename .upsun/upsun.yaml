@@ -1,27 +1,30 @@
 applications:
-  app:
-    type: "php:8.2"
-    web:
-      locations:
-        "/":
-          root: "public"
-          passthru: "/index.php"
-    build:
-      flavor: none
-    mounts:
-      "/var":
-        source: storage
-        source_path: files
-      "/vendor":
-        source: storage
-        source_path: files
-    variables:
-      php:
-        display_errors: "Off"
+    app:
+        type: "php:8.2"
+        web:
+            locations:
+                "/":
+                    root: "public"
+                    passthru: "/index.php"
+        build:
+            flavor: none
+        mounts:
+            "/var":
+                source: storage
+                source_path: files
+            "/vendor":
+                source: storage
+                source_path: files
+        variables:
+            php:
+                display_errors: "Off"
+            env:
+                APP_ENV: prod
+                APP_DEBUG: 0
 
 services: {}
 
 routes:
-  "https://{default}/":
-    type: upstream
-    upstream: "app:http"
+    "https://{default}/":
+        type: upstream
+        upstream: "app:http"
