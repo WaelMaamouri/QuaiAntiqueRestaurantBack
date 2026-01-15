@@ -16,4 +16,6 @@
 /phpunit.xml
 /.phpunit.cache/
 ###< phpunit/phpunit ###
-.codacy/logs/
+.codacy/logs/var/cache/
+var/log/
+var/sessions/
