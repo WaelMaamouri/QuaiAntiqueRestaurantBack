@@ -21,3 +21,5 @@ var/log/
 var/sessions/
 .codacy/logs/
 var/cache/
+
+config/secrets/
