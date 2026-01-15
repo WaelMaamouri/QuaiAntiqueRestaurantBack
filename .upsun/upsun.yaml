@@ -22,9 +22,11 @@ applications:
         relationships:
             database: "mysql:mysql"
 
-        stack: composer install --no-dev --optimize-autoloader
-            php bin/console cache:clear --env=prod --no-warmup
-            php bin/console cache:warmup --env=prod
+        hooks:
+            build: composer install --no-dev --optimize-autoloader
+                php bin/console cache:clear --env=prod
+                php bin/console cache:warmup --env=prod
+
         mounts:
             "/var":
                 source: storage
