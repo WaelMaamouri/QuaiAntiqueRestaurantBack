@@ -8,6 +8,9 @@ applications:
                     passthru: "/index.php"
         build:
             flavor: none
+            hooks: composer install --no-dev --optimize-autoloader
+                php bin/console cache:clear --env=prod --no-warmup
+                php bin/console cache:warmup --env=prod
         mounts:
             "/var":
                 source: storage
