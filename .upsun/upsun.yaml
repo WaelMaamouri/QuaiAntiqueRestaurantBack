@@ -8,7 +8,6 @@ applications:
                     passthru: "/index.php"
         build:
             flavor: none
-
         dependencies:
             php:
                 composer/composer: "^2"
@@ -19,8 +18,6 @@ applications:
                 - pdo_mysql
                 - intl
                 - opcache
-        relationships:
-            database: "mysql:mysql"
 
         hooks:
             build: composer install --no-dev --optimize-autoloader
