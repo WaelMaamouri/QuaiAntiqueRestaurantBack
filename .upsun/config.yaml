@@ -1,49 +1,52 @@
-# Upsun configuration, generated using AI at: 2026-01-15T15:52:32+01:00
+# Upsun configuration, generated using AI at: 2026-01-15T16:03:53+01:00
 # AI can make mistakes. Please modify this file to suit your needs.
 applications:
-    app:
-        type: php:8.5
+  quaiantique-restaurant-back:
+    type: php:8.5
+    build:
+      flavor: none
+    hooks:
+      build: |
+        set -ex
+        curl -sfS https://get.symfony.com/cloud/configurator | bash
+        symfony-build
 
-        build:
-            flavor: none
+      deploy: |
+        set -ex
+        symfony-deploy
 
-        hooks:
-            build: |
-                set -ex
-                curl -sfS https://get.symfony.com/cloud/configurator | bash
-                symfony-build
+    web:
+      locations:
+        /:
+          root: public
+          passthru: /index.php
+          expires: 5m
 
-            deploy: |
-                set -ex
-                symfony-deploy
+    runtime:
+      extensions:
+        - pdo_pgsql  # PostgreSQL support
+        - apcu       # Performance enhancement
+        - mbstring   # Multibyte string support
+        - sodium     # Cryptography
 
-        web:
-            locations:
-                /:
-                    root: public
-                    passthru: /index.php
-                    expires: 5m
+    relationships:
+      database: {}  # Link to PostgreSQL service
 
-        runtime:
-            extensions:
-                - pdo_pgsql
-                - apcu
-                - mbstring
-                - sodium
+    mounts:
+      var/cache:
+        source: tmp
+      var/log:
+        source: storage
 
-        relationships:
-            database: {}
-
-        mounts:
-            var/cache:
-                source: tmp
-            var/log:
-                source: storage
-
-        variables:
-            php:
-                opcache.preload: config/preload.php
+    variables:
+      php:
+        opcache.preload: config/preload.php
 
 services:
-    database:
-        type: postgresql:18
+  database:
+    type: postgresql:18
+
+routes:
+  https://{default}/:
+    type: upstream
+    upstream: quaiantique-restaurant-back:http
