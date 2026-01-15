@@ -1,0 +1,15 @@
+services:
+    - type: web
+      name: symfony-back
+      env: php
+      plan: free
+      region: oregon # tu peux changer la région
+      buildCommand: "composer install --no-dev --optimize-autoloader"
+      startCommand: "php -S 0.0.0.0:10000 -t public"
+      envVars:
+          - key: APP_ENV
+            value: prod
+          - key: APP_SECRET
+            value: TonAppSecretIciGeneré
+          - key: DATABASE_URL
+            value: "mysql://Wael:Mriwti%2F1995@mysql-abc123.render.com:3306/Quai_Antique?serverVersion=8.0&charset=utf8mb4"
