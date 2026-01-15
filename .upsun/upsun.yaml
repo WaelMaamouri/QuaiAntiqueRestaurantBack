@@ -1,11 +1,13 @@
 applications:
     app:
         type: "php:8.4"
+
         web:
             locations:
                 "/":
                     root: "public"
                     passthru: "/index.php"
+
         runtime:
             extensions:
                 - mbstring
@@ -13,19 +15,29 @@ applications:
                 - pdo_mysql
                 - intl
                 - opcache
+
         mounts:
             "/var":
                 source: storage
-                source_path: files
+                source_path: var
             "/vendor":
                 source: storage
-                source_path: files
+                source_path: vendor
+
+        relationships:
+            database: "mysql:mysql"
+
         variables:
             env:
-                APP_ENV: prod
+                APP_ENV: "prod"
                 APP_DEBUG: "0"
+                # IMPORTANT : Doctrine utilisera AUTOMATIQUEMENT DATABASE_URL générée par Upsun
+                # Ne mets PAS DATABASE_URL ici.
 
-services: {}
+services:
+    mysql:
+        # La dernière version stable MySQL chez Upsun est 8.0
+        type: "mysql:8.0"
 
 routes:
     "https://{default}/":

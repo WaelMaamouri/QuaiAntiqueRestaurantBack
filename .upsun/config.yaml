@@ -1,0 +1,57 @@
+# Upsun config for Symfony 8 + MySQL 8
+
+applications:
+    app:
+        type: php:8.4
+
+        build:
+            flavor: none
+
+        hooks:
+            build: |
+                set -ex
+                curl -sfS https://get.symfony.com/cloud/configurator | bash
+                symfony-build
+
+            deploy: |
+                set -ex
+                symfony-deploy
+
+        web:
+            locations:
+                "/":
+                    root: "public"
+                    passthru: "/index.php"
+                    expires: 5m
+
+        runtime:
+            extensions:
+                - mbstring
+                - opcache
+                - intl
+                - pdo
+                - pdo_mysql # MySQL only
+
+        relationships:
+            database: "mysql:mysql" # Match service name
+
+        mounts:
+            "var/cache":
+                source: tmp
+            "var/log":
+                source: storage
+            "var/sessions":
+                source: storage
+
+        variables:
+            php:
+                opcache.preload: config/preload.php
+
+services:
+    mysql:
+        type: "mysql:8.0"
+
+routes:
+    "https://{default}/":
+        type: upstream
+        upstream: "app:http"

@@ -7,7 +7,6 @@
         "database",
         "dbal",
         "db2",
-        "mariadb",
         "mssql",
         "mysql",
         "pgsql",
@@ -20,15 +19,28 @@
         "sql",
         "sqlite",
         "sqlserver",
-        "sqlsrv"
+        "sqlsrv",
+        "mariadb"
     ],
     "homepage": "https://www.doctrine-project.org/projects/dbal.html",
     "license": "MIT",
     "authors": [
-        {"name": "Guilherme Blanco", "email": "guilhermeblanco@gmail.com"},
-        {"name": "Roman Borschel", "email": "roman@code-factory.org"},
-        {"name": "Benjamin Eberlei", "email": "kontakt@beberlei.de"},
-        {"name": "Jonathan Wage", "email": "jonwage@gmail.com"}
+        {
+            "name": "Guilherme Blanco",
+            "email": "guilhermeblanco@gmail.com"
+        },
+        {
+            "name": "Roman Borschel",
+            "email": "roman@code-factory.org"
+        },
+        {
+            "name": "Benjamin Eberlei",
+            "email": "kontakt@beberlei.de"
+        },
+        {
+            "name": "Jonathan Wage",
+            "email": "jonwage@gmail.com"
+        }
     ],
     "require": {
         "php": "^8.2",
@@ -60,10 +72,14 @@
         }
     },
     "autoload": {
-        "psr-4": { "Doctrine\\DBAL\\": "src" }
+        "psr-4": {
+            "Doctrine\\DBAL\\": "src"
+        }
     },
     "autoload-dev": {
-        "psr-4": { "Doctrine\\DBAL\\Tests\\": "tests" }
+        "psr-4": {
+            "Doctrine\\DBAL\\Tests\\": "tests"
+        }
     },
     "scripts": {
         "docs": "composer --working-dir docs update && ./docs/vendor/bin/build-docs.sh @additional_args"
