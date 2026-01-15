@@ -8,9 +8,23 @@ applications:
                     passthru: "/index.php"
         build:
             flavor: none
-            hooks: composer install --no-dev --optimize-autoloader
-                php bin/console cache:clear --env=prod --no-warmup
-                php bin/console cache:warmup --env=prod
+
+        dependencies:
+            php:
+                composer/composer: "^2"
+        runtime:
+            extensions:
+                - mbstring
+                - pdo
+                - pdo_mysql
+                - intl
+                - opcache
+        relationships:
+            database: "mysql:mysql"
+
+        stack: composer install --no-dev --optimize-autoloader
+            php bin/console cache:clear --env=prod --no-warmup
+            php bin/console cache:warmup --env=prod
         mounts:
             "/var":
                 source: storage
