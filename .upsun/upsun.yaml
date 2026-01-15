@@ -1,0 +1,27 @@
+applications:
+  app:
+    type: "php:8.2"
+    web:
+      locations:
+        "/":
+          root: "public"
+          passthru: "/index.php"
+    build:
+      flavor: none
+    mounts:
+      "/var":
+        source: storage
+        source_path: files
+      "/vendor":
+        source: storage
+        source_path: files
+    variables:
+      php:
+        display_errors: "Off"
+
+services: {}
+
+routes:
+  "https://{default}/":
+    type: upstream
+    upstream: "app:http"
