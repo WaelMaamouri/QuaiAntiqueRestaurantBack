@@ -1,13 +1,14 @@
-name: quai-antique-symfony
+name: quai-antique-app
 type: php:8.2
 
-# Commandes exécutées au build / déploiement
+# Build et déploiement
 build:
+    flavor: composer
     hooks:
         pre-deploy:
-            # Installer les dépendances Symfony sans dev et optimiser l'autoloader
+            # Installer les dépendances et optimiser l'autoloader
             - composer install --no-dev --optimize-autoloader
-            # Vider et préchauffer le cache prod
+            # Clear et warmup le cache Symfony pour prod
             - php bin/console cache:clear --env=prod
             - php bin/console cache:warmup --env=prod
 
@@ -16,18 +17,15 @@ variables:
     env:
         APP_ENV: prod
         APP_DEBUG: 0
-        # DATABASE_URL doit être défini via Upsun secrets/env
-        DATABASE_URL: "%env(DATABASE_URL)%"
-        DEFAULT_URI: "https://main-bvxea6i-aofzto4ibqmv2.fr-3.platformsh.site"
+        DATABASE_URL: "mysql://user:password@db-main.aofzto4ibqmv2.platformsh.site:3306/Quai_Antique?serverVersion=10.4.28-mariadb&charset=utf8mb4"
 
-# Point d'entrée web
+# Application web
 web:
-    public: true
-    entrypoint: "php-fpm"
-
-# Extensions PHP requises pour Symfony / Doctrine
-runtime:
-    extensions:
-        - pdo
-        - pdo_mysql
-        - intl
+    locations:
+        "/":
+            root: "public"
+            index: ["index.php"]
+            allow: true
+    scripts:
+        # Point d'entrée pour le serveur web
+        start: "php-fpm"
