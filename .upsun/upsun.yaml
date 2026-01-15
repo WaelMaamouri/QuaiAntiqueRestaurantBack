@@ -1,0 +1,30 @@
+applications:
+  app:
+    type: "php:8.2"
+    web:
+      locations:
+        "/":
+          root: "public"
+          passthru: "/index.php"
+    build:
+      flavor: none
+    hooks:
+      build: |
+        composer install --no-dev --optimize-autoloader
+    mounts:
+      "/var":
+        source: shared
+        source_path: files
+      "/vendor":
+        source: shared
+        source_path: files
+    variables:
+      php:
+        display_errors: "Off"
+
+services: {}
+
+routes:
+  "https://{default}/":
+    type: upstream
+    upstream: "app:http"
